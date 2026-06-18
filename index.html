@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DepEd Grade Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="app.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>DepEd Grade Calculator</h1>
+                <p>Compute 20% Written, 60% Performance, 20% Unit Test simply and securely offline.</p>
+            </div>
+            <div class="actions">
+                <button id="loginBtn" class="btn" style="background:#fff; border: 1px solid #e2e8f0; color:#475569; display:flex; align-items:center; gap:0.5rem; font-weight:600;"><img src="https://img.icons8.com/color/18/000000/google-logo.png" alt="G"> <span id="loginText">Sign In</span></button>
+                <button id="addStudentBtn" class="btn primary-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg> Add Student</button>
+                <button id="exportCsvBtn" class="btn secondary-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Export CSV</button>
+                <button id="exportConfigBtn" class="btn" style="background:#f1f5f9; color:#334155;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Backup Config</button>
+                <label for="importConfigBtn" class="btn" style="background:#f1f5f9; color:#334155; cursor:pointer;" title="Import Config Data"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg> Import Config</label>
+                <input type="file" id="importConfigBtn" accept=".json" style="display:none;">
+            </div>
+        </header>
+
+        <section class="nav-section" style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;">
+            <select id="sectionSelect" class="section-dropdown" style="padding: 0.6rem; border-radius: 6px; font-weight: 600; min-width: 200px;">
+                <option value="default">Default Section</option>
+            </select>
+            <button id="addSectionBtn" class="btn secondary-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> New Section</button>
+            <button id="renameSectionBtn" class="btn" style="background:#e2e8f0; color:#0f172a; padding: 0.5rem 1rem; font-size: 0.9rem;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"></path></svg> Rename</button>
+            <button id="deleteSectionBtn" class="btn" style="background:#fef2f2; color:#ef4444; padding: 0.5rem 1rem; font-size: 0.9rem;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> Delete</button>
+        </section>        <section class="config-section">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="margin: 0;">Global Configuration</h3>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; background: #f8fafc; padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid #cbd5e1;">
+                        <label for="passingGrade" style="font-weight: 600; font-size: 0.9rem; color: #475569; margin: 0;">Passing Grade (Excused):</label>
+                        <input type="number" id="passingGrade" class="weight-input" value="80" style="width: 60px; font-weight: bold; background: white;">%
+                    </div>
+                </div>
+                <div class="config-grid">
+                    <div class="config-item" id="writtenConfig">
+                        <div class="config-header">
+                            <label>Written Tasks (Max Scores)</label>
+                            <button id="addWWBtn" class="add-col-btn" title="Add Written Work"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                        </div>
+                        <div class="max-inputs" id="wwMaxContainer">
+                            <div class="max-input-group">
+                                <span>WW 1:</span>
+                                <input type="number" class="global-input max-ww" value="50" min="1">
+                            </div>
+                        </div>
+                        <small>Weight: <input type="number" id="weightWritten" class="weight-input" value="10">%</small>
+                    </div>
+
+                    <div class="config-item" id="perfConfig">
+                        <div class="config-header">
+                            <label>Performance Tasks (Max Scores)</label>
+                            <button id="addPTBtn" class="add-col-btn" title="Add Performance Task"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                        </div>
+                        <div class="max-inputs" id="ptMaxContainer">
+                            <div class="max-input-group">
+                                <span>PT 1:</span>
+                                <input type="number" class="global-input max-pt" value="50" min="1">
+                            </div>
+                        </div>
+                        <small>Weight: <input type="number" id="weightPerformance" class="weight-input" value="50">%</small>
+                    </div>
+
+                    <div class="config-item" id="activityConfig">
+                        <div class="config-header">
+                            <label>Activities (Max Scores)</label>
+                            <button id="addActBtn" class="add-col-btn" title="Add Activity"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                        </div>
+                        <div class="max-inputs" id="actMaxContainer">
+                            <div class="max-input-group">
+                                <span>Act 1:</span>
+                                <input type="number" class="global-input max-act" value="50" min="1">
+                            </div>
+                        </div>
+                        <small>Weight: <input type="number" id="weightActivity" class="weight-input" value="10">%</small>
+                    </div>
+
+                    <div class="config-item" id="quizConfig">
+                        <div class="config-header">
+                            <label>Quizzes (Max Scores)</label>
+                            <button id="addQzBtn" class="add-col-btn" title="Add Quiz"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                        </div>
+                        <div class="max-inputs" id="qzMaxContainer">
+                            <div class="max-input-group">
+                                <span>Qz 1:</span>
+                                <input type="number" class="global-input max-qz" value="50" min="1">
+                            </div>
+                        </div>
+                        <small>Weight: <input type="number" id="weightQuiz" class="weight-input" value="10">%</small>
+                    </div>
+
+                    <div class="config-item" id="testConfig">
+                        <div class="config-header">
+                            <label>Unit Test (Max Score)</label>
+                        </div>
+                        <div class="max-inputs" id="qaMaxContainer">
+                            <div class="max-input-group">
+                                <span>Test:</span>
+                                <input type="number" class="global-input max-qa" value="50" min="1">
+                            </div>
+                        </div>
+                        <small>Weight: <input type="number" id="weightTest" class="weight-input" value="20">%</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="table-wrapper card">
+                <table id="gradesTable">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="sticky-col">Learner's Name</th>
+                            <th colspan="4" id="thAct">Activities</th>
+                            <th colspan="4" id="thQuiz">Quizzes</th>
+                            <th colspan="4" id="thWritten">Written Tasks</th>
+                            <th colspan="4" id="thPerf">Performance Tasks</th>
+                            <th colspan="3" id="thTest">Unit Test</th>
+                            <th rowspan="2" class="highlight">Initial Grade</th>
+                        </tr>
+                        <tr id="subHeaderRow">
+                            <!-- Activities -->
+                            <th class="act-header">Act 1</th>
+                            <th class="total-col th-act-total">Total</th>
+                            <th class="th-act-ps">PS</th>
+                            <th class="th-act-ws">WS</th>
+                            <!-- Quizzes -->
+                            <th class="qz-header">Qz 1</th>
+                            <th class="total-col th-qz-total">Total</th>
+                            <th class="th-qz-ps">PS</th>
+                            <th class="th-qz-ws">WS</th>
+                            <!-- Written -->
+                            <th class="ww-header">WW 1</th>
+                            <th class="total-col th-ww-total">Total</th>
+                            <th class="th-ww-ps">PS</th>
+                            <th class="th-ww-ws">WS</th>
+                            <!-- Performance -->
+                            <th class="pt-header">PT 1</th>
+                            <th class="total-col th-pt-total">Total</th>
+                            <th class="th-pt-ps">PS</th>
+                            <th class="th-pt-ws">WS</th>
+                            <!-- Test -->
+                            <th class="qa-header">Score</th>
+                            <th class="th-qa-ps">PS</th>
+                            <th class="th-qa-ws">WS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentRows">
+                        <!-- Rows dynamically added -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Login Modal Mockup -->
+    <div id="loginModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google">
+                <h2 style="margin-top: 1rem; color: #202124;">Sign in</h2>
+                <p style="color: #5f6368;">to DepEd Grade Calculator</p>
+            </div>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <input type="text" id="googleEmail" placeholder="Email or phone" style="width: 100%; padding: 0.8rem; border: 1px solid #dadce0; border-radius: 4px; font-size: 1rem;">
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+                <button class="btn" style="background: transparent; color: #1a73e8; font-weight: 500;" onclick="document.getElementById('loginModal').style.display='none'">Cancel</button>
+                <button id="submitLoginBtn" class="btn primary-btn" style="background: #1a73e8;">Next</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registered:', reg.scope))
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>
